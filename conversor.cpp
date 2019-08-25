@@ -5,6 +5,186 @@
 #include <locale.h>
 
 using namespace std;
+
+int bin12dec(char Bin1[16]){
+ int total=0,j=0,k=0;
+    char bin1[16]={0};
+    cin>>bin1;
+    strcpy(bin1,Bin1);
+
+    //INVERTE OS VALORES E EM SEGUIDA OS MULTIPLICA LOGO EM SEGUIDA
+    for(int i=15; i>0;i--){
+        if(bin1[i]=='0'){
+            bin1[i]='1';
+            
+        }else if(bin1[i]=='1'){
+            bin1[i]='0';
+        }
+        if(bin1[i]=='1'){
+            total += pow(2,j);
+        }
+        j++;
+    }
+
+    //VERIFICA SE O PRIMEIRO DIGITO É 1 POR CONTA DO SINAL DE AMPLITUDE E RETORNA O TOTAL POSITIVO OU NEGATIVO
+    if(bin1[0]=='0'){
+        return -1*total;
+    }
+    return total;
+}
+
+int bin22dec(char Bin2[16]){
+
+    //INICIALIZAÇÃO DOS VARIAVEIS, E PEGANDO O PARAMETRO
+    int total=0,j=0,k=0;
+	  char bin2[16]={0};
+    strcpy(bin2,Bin2);
+
+    for(int i=15;i>0;i--){
+        if(bin2[i]=='1'){
+            break;
+        }else{
+            k++;
+        }
+    }
+    if(k==15){
+        cout<<'0';
+        return 0;
+    }
+    
+    //SUBTRAI 1 E VÊ OQ ACONTECE
+
+    if(bin2[15]==48){
+    bin2[15]=47;
+    }else {
+    bin2[15]=48;
+    }
+
+    for(int i=15;i>0;i--){
+
+        if (bin2[i]==47){
+            bin2[i]=48;
+            if (i==1){ 
+                break; 
+            }
+            if(bin2[i-1]==49){
+                bin2[i-1]=48;
+            }else if(bin2[i-1]==48){
+                bin2[i-1]=47;
+            }
+        } 
+    } 
+    //INVERTE OS VALORES E EM SEGUIDA OS MULTIPLICA LOGO EM SEGUIDA
+    for(int i=15; i>0;i--){
+        if(bin2[i]=='0'){
+            bin2[i]='1';
+            
+        }else if(bin2[i]=='1'){
+            bin2[i]='0';
+        }
+        if(bin2[i]=='1'){
+            total += pow(2,j);
+        }
+        j++;
+    }
+
+    //VERIFICA SE O PRIMEIRO DIGITO É 1 POR CONTA DO SINAL DE AMPLITUDE E RETORNA O TOTAL POSITIVO OU NEGATIVO
+    if(bin2[0]=='0'){
+        cout<<total*-1;
+        return -1*total;
+    }
+    cout<<total;
+    return total;
+}
+
+int dec2bin2(int decimal){ //funcao que converte de decimal para binario complemento de 2
+  int r, q = decimal;
+	char bin2[16]={0};
+	if(q<0){
+        bin2[15]=49; 
+        q=abs(q);
+	}else{
+        bin2[15]='0';
+  }
+    
+  for(int i=0 ;i<=14;i++){
+        r = q%2;
+        q /= 2;
+        bin2[i]=r+48;
+  }
+  
+  for(int i=0;i<=15;i++){
+        if(bin2[i]=='0'){
+            bin2[i]='1';
+        }else if(bin2[i]=='1'){
+            bin2[i]='0'; 
+        }
+  }
+  
+  if(bin2[0]==48){
+    bin2[0]=49;
+  }else {
+    bin2[0]=50;
+  }
+
+  for(int i=0;i<15;i++){
+
+    if (bin2[i]==50){
+        bin2[i]=48;
+        if (i==14){ 
+          break; 
+        }
+        if(bin2[i+1]==49){
+          bin2[i+1]=50;
+        }else if(bin2[i+1]==48){
+          bin2[i+1]=49;
+        }
+    } 
+  } 
+    cout << "\n Número em binário de complemento 2: " ;
+
+  for(int j = 15; j>=0; j--){
+      cout << bin2[j];
+  }
+    
+  return 0;
+}
+
+
+int dec2bin1(int decimal){ //funcao que converte de decimal para binario complemento de 1
+  int r, q = decimal;
+	char bin1[16]={0};
+	
+	if(q<0){
+        bin1[15]=49;
+        q=abs(q);
+	}else{
+        bin1[15]='0';
+  }
+    
+  for(int i=0 ;i<=14;i++){
+        r = q%2;
+        q /= 2;
+        bin1[i]=r+48;
+  }
+  
+  for(int i=0;i<=15;i++){
+        if(bin1[i]=='0'){
+            bin1[i]='1';
+        }else if(bin1[i]=='1'){
+            bin1[i]='0';
+        }
+  }
+
+
+  cout << "\n Número em binário de complemento 1: " ;
+
+  for(int j = 15; j>=0; j--){
+      cout << bin1[j];
+  }
+    
+  return 0;
+}
  int bin2dec()
    {    //funcao que converte de binario para decimal (inteiro)
         int valor=0,aux,j=0;
@@ -81,7 +261,7 @@ using namespace std;
             hexa[i]=r+48;
         }
     }
-    cout << "\nNúmero em Hexadecimal: ";
+    cout << "\n Número em Hexadecimal: ";
   
     for(int j = 4; j>=0; j--){ //imprimir ao contrario 
        cout << hexa[j];
@@ -93,6 +273,7 @@ using namespace std;
 int main (){
   int opcao;
   int decimal;
+  int retorno;
 
   while (opcao != 5)
     {
@@ -119,7 +300,10 @@ int main (){
 	    cout << "\n Digite o número desejado com até 16 dígitos. Ex: 010 é 0000000000000010 \n";
 	    
 	    cout << "\n Número em Decimal:" << bin2dec();
-	    cout << "\n Número em Hexadecimal" ;
+		int rtn;
+		rtn = bin2dec();
+
+	    cout << "\n Número em Hexadecimal" << dec2hexa ;
 	    cout << "\n\n Insira 1 para voltar para o menu\n";
 	    cin >> opcao;
 	    if (opcao == 1)
@@ -138,7 +322,8 @@ int main (){
 	    cin >> decimal;
 	    dec2bin(decimal);
 	    dec2hexa(decimal);
-	   
+	   	dec2bin1(decimal);
+		dec2bin2(decimal);   
 	    cout << "\n\n Insira 1 para voltar para o menu\n";
 	    cin >> opcao;
 	    if (opcao == 1)
@@ -154,25 +339,32 @@ int main (){
 	    system ("clear");
 	    cout << "\n\n Base escolhida: Hexadecimal";
 	    cout << "\n Digite o número \n";
-	    cout << "\n\n Insira 1 para voltar para o menu";
+	    cout << "\n\n Insira 1 para voltar para o menu\n";
 	    cin >> opcao;
 	    if (opcao == 1)
 	      {
 		system ("clear");
 
-	      }
+	      } 
 	    break;
 	  }
 
 	case 4:
 	  {
 	    system ("clear");
+      char bin1[16]={0};
+      cin>>bin1;
+      int a;
+	    a = bin12dec(bin1); 
 	    cout << "\n\n Base escolhida: Binário Complemento de 1";
-	    cout << "\n Digite o número \n";
-	    cout << "\n\n Insira 1 para voltar para o menu";
+	    cout << "\n Digite o número desejado com até 16 dígitos. \n";
+		  cout << "Número em decimal: " << a;
+		  cout << "Número em binário: " << dec2bin(a);
+		  cout << "Número em binário complemento de 2: " << dec2bin2(a);
+		  cout << "Número em Hexadecimal: " << dec2hexa(a);
+		  cout << "\n\n Insira 1 para voltar para o menu\n";
 	    cin >> opcao;
-	    if (opcao == 1)
-	      {
+	    if (opcao == 1) {
 		system ("clear");
 
 	      }
@@ -180,10 +372,17 @@ int main (){
 	  }
 	case 5:
 	  {
+		char bin2[16]={0};
 	    system ("clear");
 	    cout << "\n\n Base escolhida: Binário Complemento de 2";
-	    cout << "\n Digite o número \n";
-	    cout << "\n\n Insira 1 para voltar para o menu";
+	 	cout << "\n Digite o número desejado com até 16 dígitos. Ex: 1000110 =  0000000001000110\n";
+		cin >> bin2;
+		retorno = bin22dec(bin2);
+		cout << "Número em decimal: " << retorno<<endl;
+		cout << "Número em binário: " << dec2bin(retorno);
+		cout << "Número em binário complemento de 1: " << dec2bin1(retorno);
+		cout << "Número em Hexadecimal: " << dec2hexa(retorno);
+	    cout << "\n\n Insira 1 para voltar para o menu\n";
 	    cin >> opcao;
 	    if (opcao == 1){
 	    	system ("clear");
