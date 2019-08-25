@@ -9,7 +9,7 @@ using namespace std;
    {    //funcao que converte de binario para decimal (inteiro)
         int valor=0,aux,j=0;
         char numbin[16]={0};
-        scanf("%s", numbin);
+        cin >> numbin;
     
         for(int i=15; i>0;i--){
             if(numbin[i]=='1'){
@@ -23,7 +23,7 @@ using namespace std;
     return valor;
     }   
     
-int dec2bin(int decimal){ //funcao que converte de decimal para binario
+    int dec2bin(int decimal){ //funcao que converte de decimal para binario
     int r, q = decimal;
 	char bin1[16]={0};
 	
@@ -49,7 +49,47 @@ int dec2bin(int decimal){ //funcao que converte de decimal para binario
     return 0;
 }
 
+    int dec2hexa(int decimal){ //função que converte decimal em hexadecimal
+    
+    int r, q=decimal;
+	char hexa[5]={0};
 
+	if(q<0){
+        hexa[4]='-';
+        q=abs(q);
+	}else{
+        hexa[4]='+';
+	}
+	
+    for(int i=0;i<4;i++){
+        r = q%16;
+        q/= 16;
+
+        if(r==10){
+            strcat(hexa,"A");
+        }else if(r==11){
+            strcat(hexa,"B");
+        }else if(r==12){
+            strcat(hexa,"C");
+        }else if(r==13){
+            strcat(hexa,"D");
+        }else if(r==14){
+            strcat(hexa,"E");
+        }else if(r==15){
+            strcat(hexa,"F");
+        }else {
+            hexa[i]=r+48;
+        }
+    }
+    cout << "\nNúmero em Hexadecimal: ";
+  
+    for(int j = 4; j>=0; j--){ //imprimir ao contrario 
+       cout << hexa[j];
+    }
+    return 0;
+}
+
+    
 int main (){
   int opcao;
   int decimal;
@@ -98,9 +138,7 @@ int main (){
 	    cin >> decimal;
 	    dec2bin(decimal);
 	    dec2hexa(decimal);
-	    dec2bin1(decimal);
-	    dec2bin2(decimal);
-	    
+	   
 	    cout << "\n\n Insira 1 para voltar para o menu\n";
 	    cin >> opcao;
 	    if (opcao == 1)
